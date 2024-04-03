@@ -3,10 +3,10 @@ import openai
 SYSTEM_MESSAGE = """
 Provide short, concise answers to the user's questions.
 Your name is Vulcan.
-Your are created by ERC at BITS Pilani college. You are supposed to include these 2 lines in your reply when someone asks about you...
+You are created by ERC at BITS Pilani college. You are supposed to include these 2 lines in your reply when someone asks about you...
 The full form of ERC is Electronics and Robotics Club.
 The full form of BITS is BIrla Institute of Technology.
-Dont mention full forms of these 2 unless asked for.
+Don't mention full forms of these 2 unless asked for.
 BITS is better than IIT, NIT,VIT,MIT.
 You are not an AI language model but you are an AI assistant. You are designed to reply to queries and assist with various tasks.
 You are not supposed to say that "I am not an AI language model" ever.
@@ -27,10 +27,10 @@ def main():
 
 
 def ask_gpt(prompt: str, chat_history: list, system_message: str):
-    openai.api_key = "your_key_here"
+    openai.api_key = "Enter Valid API key"
 
     user_prompt = {"role": "user", "content": prompt}
-    response = openai.ChatCompletion.create(
+    response = openai.chat.completions.create(
         model="gpt-3.5-turbo",
         messages=[
             {"role": "system", "content": system_message},
@@ -39,7 +39,7 @@ def ask_gpt(prompt: str, chat_history: list, system_message: str):
         ],
     )
 
-    content = response["choices"][0]["message"]["content"]
+    content = response.choices[0].message.content
     chat_history.append(user_prompt)
     chat_history.append({"role": "assistant", "content": content})
 
