@@ -1,0 +1,6 @@
+Plotted to 'C:\Users\jajoo\OneDrive\Desktop\BITS\Projects\erc\Vulcan\Mega_Shield\mega_servos_1\gerberfiles\mega_servos_1-F_Cu.gbr'.
+Created Gerber job file 'C:\Users\jajoo\OneDrive\Desktop\BITS\Projects\erc\Vulcan\Mega_Shield\mega_servos_1\gerberfiles\mega_servos_1-job.gbrjob'.
+Plotted to 'C:\Users\jajoo\OneDrive\Desktop\BITS\Projects\erc\Vulcan\Mega_Shield\mega_servos_1\gerberfiles\mega_servos_1-F_Cu.gbr'.
+Created Gerber job file 'C:\Users\jajoo\OneDrive\Desktop\BITS\Projects\erc\Vulcan\Mega_Shield\mega_servos_1\gerberfiles\mega_servos_1-job.gbrjob'.
+Info: Done.
+Info: Done.
