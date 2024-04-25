@@ -76,26 +76,7 @@ Well... this is probably the 1% out of the 100 that we can do with... can start 
 * [ROS](https://www.ros.org/) - Environment used
 * [OPENCV](https://opencv.org/) - Used for vision
 
-## Contributers
+## Project Leads
 
-* [Parth Shah](https://github.com/Parth-Shah-Tool-Kit) - Project lead
-* [Ritwik Sharma](https://github.com/Maker-Rat) - Project lead
-
-### Coding and Electronics team
-* [Ajinkya Deshpande](https://github.com/ajinkya110001)
-* [Nayan Gogari](https://github.com/NG2411)
-* [Param Gandhi](https://github.com/Pamdi8888)
-* [Sharvil Potdar](https://github.com/SMP111  )
-* [Vimarsh Shah](https://github.com/vimarsh244)
-* [Nilay Wani](https://github.com/Anymal2408)
-
-### Mech team
-* [Atul M](https://github.com/RoboAM13)
-* [Nilay Wani](https://github.com/Anymal2408)
-* [Padi Sudeep](https://github.com/WhatRaSudeep)
-
-### X Members
-* [Mehlam Songerwala](https://github.com/mehlams)
-* [Naitik Verma](https://github.com/07naitik)
-* [Vrishti Godhwani](https://github.com/Vierra11)
-* [Shloka Shetty](https://github.com/shloka15)
+* [Parth Shah](https://github.com/Parth-Shah-Tool-Kit) 
+* [Ritwik Sharma](https://github.com/Maker-Rat) 
