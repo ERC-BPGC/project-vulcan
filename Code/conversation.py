@@ -17,8 +17,6 @@ def text_to_speech(text):
     engine.say(text)
     engine.runAndWait()
     
-        
-
 
 def get_speech_input():
     recognizer = sr.Recognizer()

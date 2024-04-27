@@ -47,6 +47,9 @@ def drawrect(drawcontext, xy, outline=None, width=0):
     points = (x1, y1), (x2, y1), (x2, y2), (x1, y2), (x1, y1)
     drawcontext.line(points, fill=outline, width=width)
 
+def writer(tx):
+    pass
+
 
 def run(video_path, face_path, model_weight, jitter, vis, display_off, save_text):
     # set up vis settings
@@ -164,14 +167,9 @@ def run(video_path, face_path, model_weight, jitter, vis, display_off, save_text
                     print("Working...")
                     timestamp = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
                     if score > 0.65:
-                        with open("/home/carnivorousegg/ERC/Project Vulcan/my code/gaze detection/eye-contact-cnn-master/demo_face_detections.txt", "a+") as f:
-                          #make sure to change the file path in above line
-                            f.write(f"{timestamp},yes\n")
+                        writer(f"{timestamp},yes\n")
                     else:
-                        with open("/home/carnivorousegg/ERC/Project Vulcan/my code/gaze detection/eye-contact-cnn-master/demo_face_detections.txt", "a+") as f:
-                          #make sure to change the file path in above line
-                            f.write(f"{timestamp},no\n")
-                    f.close()
+                        writer(f"{timestamp},no\n")
 
             if not display_off:
                 frame = np.asarray(frame) # convert PIL image back to opencv format for faster display
@@ -193,5 +191,3 @@ def run(video_path, face_path, model_weight, jitter, vis, display_off, save_text
     print ('DONE!')
 
 
-if __name__ == "__main__":
-    run(args.video, args.face, args.model_weight, args.jitter, args.save_vis, args.display_off, args.save_text)
