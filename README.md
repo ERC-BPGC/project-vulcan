@@ -55,7 +55,9 @@ Elaborating:
 *	Hearing and Speech production: Speech recognition, processing it and delivery of words and emotions to the above system. NLM, NLP. 
 
 ## Individual components 
-*>Gaze.py: This file uses dlib, cv2 and CNN_FACE_MODEL to estimate the gaze of the user according to which it passes a function to driver code returning true if the model estimate gaze to be more than 0.65. 
+* Gaze.py: This file uses dlib, cv2 and CNN_FACE_MODEL to estimate the gaze of the user according to  which it passes a function to driver code returning true if the model estimate gaze to be more than 0.65. 
+* expression(final).py: We used cv2, keras.models and self generated model to identify the person's current mood state in order to assist with the environmental awareness of our vulcan's main drive system.
+* person recognition: it identifies the person with whom it is talking and analyze the past recorded converstaion in order to give better response.
 
 ## Limitations
 *	Cannot move physically, just creating the structure above the neck.
