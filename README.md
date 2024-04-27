@@ -54,6 +54,9 @@ Elaborating:
 *	Movement of all mech subsystems: Coordination of all servos and other actuators to bring about emotions and other functions like talking.
 *	Hearing and Speech production: Speech recognition, processing it and delivery of words and emotions to the above system. NLM, NLP. 
 
+## Individual components 
+*>Gaze.py - This file uses dlib, cv2 and CNN_FACE_MODEL to estimate the gaze of the user according to which it passes a function to driver code returning true if the model estimate gaze to be more than 0.65. 
+
 ## Limitations
 *	Cannot move physically, just creating the structure above the neck.
 
@@ -68,7 +71,6 @@ Well... this is probably the 1% out of the 100 that we can do with... can start 
 *	However, our robot just comprises of the face but still, it can serve the purpose we aim to make it for... 
 
 *	We have seen many big companies build humanoid robots but a robot that can move and come to use in daily life but starting this at college level would be amazing...
-
 
 ## Built With
 
