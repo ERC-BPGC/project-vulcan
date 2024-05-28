@@ -1,4 +1,0 @@
-(sym_lib_table
-  (version 7)
-  (lib (name "XT60-M")(type "KiCad")(uri "${KIPRJMOD}/Downloaded Symbols/xt60m/XT60-M.kicad_sym")(options "")(descr ""))
-)
