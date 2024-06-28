@@ -19,7 +19,7 @@ parser = argparse.ArgumentParser()
 
 parser.add_argument('--video', type=str, help='input video path. live cam is used when not specified')
 parser.add_argument('--face', type=str, help='face detection file path. dlib face detector is used when not specified')
-parser.add_argument('--model_weight', type=str, help='path to model weights file', default='models/model_weights.pkl')
+parser.add_argument('--model_weight', type=str, help='path to model weights file', default='modules/models/model_weights.pkl')
 #make sure to change the file path in above line
 parser.add_argument('--jitter', type=int, help='jitter bbox n times, and average results', default=0)
 parser.add_argument('-save_vis', help='saves output as video', action='store_true')
@@ -28,7 +28,7 @@ parser.add_argument('-display_off', help='do not display frames', action='store_
 
 args = parser.parse_args()
 
-CNN_FACE_MODEL = 'models/mmod_human_face_detector.dat' # from http://dlib.net/files/mmod_human_face_detector.dat.bz2
+CNN_FACE_MODEL = 'modules/models/mmod_human_face_detector.dat' # from http://dlib.net/files/mmod_human_face_detector.dat.bz2
 #make sure to change the file path in above line
 
 def bbox_jitter(bbox_left, bbox_top, bbox_right, bbox_bottom):
@@ -148,6 +148,7 @@ def run(video_path, face_path, model_weight, jitter, vis, display_off, save_text
                         img_jittered = test_transforms(facej)
                         img_jittered.unsqueeze_(0)
                         img = torch.cat([img, img_jittered])
+                        break
 
                 # forward pass
                 output = model(img.cuda())
@@ -164,11 +165,11 @@ def run(video_path, face_path, model_weight, jitter, vis, display_off, save_text
                     print("Working...")
                     timestamp = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
                     if score > 0.65:
-                        with open("models/demo_face_detections.txt", "a+") as f:
+                        with open("modules/models/demo_face_detections.txt", "a+") as f:
                           #make sure to change the file path in above line
                             f.write(f"{timestamp},yes\n")
                     else:
-                        with open("models/demo_face_detections.txt", "a+") as f:
+                        with open("modules/models/demo_face_detections.txt", "a+") as f:
                           #make sure to change the file path in above line
                             f.write(f"{timestamp},no\n")
                     f.close()
