@@ -3,8 +3,12 @@ import cv2
 from PIL import Image
 import numpy as np
 
+har_cascade = cv2.CascadeClassifier('models/haarcascade_frontalface_default.xml')
+
+
 CNN_FACE_MODEL = 'models/mmod_human_face_detector.dat' # from http://dlib.net/files/mmod_human_face_detector.dat.bz2
 cnn_face_detector = dlib.cnn_face_detection_model_v1(CNN_FACE_MODEL)
+
 
 def get_face_rgb(frame):
     frame_rgb = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
@@ -48,7 +52,13 @@ def get_face_coord(frame):
         b += int((b-t)*0.2)
         bbox.append([l,t,r,b])
             
-    if bbox:
-        return bbox
-    else:
-        return [] 
+    return bbox
+   
+    
+def get_face_harr(frame):
+    gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
+    faces = har_cascade.detectMultiScale(gray, scaleFactor=1.1, minNeighbors=5, minSize=(30, 30), flags=cv2.CASCADE_SCALE_IMAGE)
+    bbox = []
+    for (x, y, w, h) in faces:
+        bbox.append([x,y,w+x,h+y])
+    return bbox, gray

@@ -16,7 +16,6 @@ model.load_state_dict(model_dict)
 model.cuda()
 model.train(False)
 
-
 def get_gaze_estimate(face):    
     img = test_transforms(face)
     img.unsqueeze_(0)
