@@ -63,7 +63,7 @@ def record_callback(_, audio:sr.AudioData) -> None:
 
 
 def ask_gpt(prompt: str, chat_history: list, system_message: str):
-    openai.api_key = "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"
+    openai.api_key = ""
 
     user_prompt = {"role": "user", "content": prompt}
     response = openai.ChatCompletion.create(
