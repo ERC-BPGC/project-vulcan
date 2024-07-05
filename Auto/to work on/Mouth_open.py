@@ -39,7 +39,7 @@ def mouth_aspect_ratio(mouth):
 
 # construct the argument parse and parse the arguments
 ap = argparse.ArgumentParser()
-ap.add_argument("-p", "--shape-predictor", required=False, default='shape_predictor_68_face_landmarks.dat',
+ap.add_argument("-p", "--shape-predictor", required=False, default='models/shape_predictor_68_face_landmarks.dat',
 	help="path to facial landmark predictor")
 ap.add_argument("-w", "--webcam", type=int, default=0,
 	help="index of webcam on system")

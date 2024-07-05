@@ -5,6 +5,7 @@ import concurrent.futures
 import m_gaze as gaze_es
 import m_face as face_re
 import m_expression as exp_re
+import b_Hand_waving_Detection as hand_de
 
 
 cap = cv2.VideoCapture(0)
@@ -19,8 +20,15 @@ def get_gaze_estimate(face):
 def get_expression(gray):
     return exp_re.get_expression(gray)
 
+def check_triggers(frame):
+    trig1 = hand_de.detect_hand(frame)
+    print(trig1)
+
+
 while(cap.isOpened()):
-    ret, frame = cap.read()
+    _, frame = cap.read()
+    check_triggers(frame)
+    
     bbox, gray = face_re.get_face_harr(frame=frame)
     if bbox:
         for b in bbox:
@@ -34,10 +42,12 @@ while(cap.isOpened()):
 
             print(gaze_result)
             print(expression_result)
-
+    
     cv2.imshow('',frame)
     key = cv2.waitKey(1) & 0xFF
     if key == ord('q'):
         break
 
 cap.release()
+hand_de.close_hands()
+cv2.destroyAllWindows()

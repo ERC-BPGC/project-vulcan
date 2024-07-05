@@ -5,7 +5,6 @@ import time
 mp_hands = mp.solutions.hands
 hands = mp_hands.Hands()
 
-cap = cv2.VideoCapture(0)
 
 prev_x, direction = None, None
 wave_count = 0
@@ -15,14 +14,13 @@ max_wave_time = 2
 
 mp_drawing = mp.solutions.drawing_utils
 
-while cap.isOpened():
-    ret, frame = cap.read()
-    if not ret:
-        break
+
+def detect_hand(frame):
+    global prev_x,direction,wave_timer,wave_count
 
     frame = cv2.flip(frame, 1)
     frame_rgb = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
-
+    
     results = hands.process(frame_rgb)
 
     if results.multi_hand_landmarks:
@@ -55,13 +53,13 @@ while cap.isOpened():
                                 wave_count=1
                             wave_timer = time.time()
 
-                        if wave_count >= 5:
-                            print("Hand is waving")
+                        if wave_count >= 3:
                             wave_count = 0
+                            return 1
 
                     direction = new_direction
                 prev_x = x
+    return 0
 
-
-hands.close()
-cap.release()
+def close_hands():
+    hands.close()
