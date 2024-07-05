@@ -2,13 +2,16 @@ import cv2
 from PIL import Image
 import concurrent.futures
 
-import m_gaze as gaze_es
 import m_face as face_re
 import m_expression as exp_re
 import b_Hand_waving_Detection as hand_de
+import b_gaze as gaze_es
 
 
 cap = cv2.VideoCapture(0)
+flag_trig = 0
+first = 1
+
 
 if (cap.isOpened()== False):
     print("Error opening video stream or file")
@@ -17,32 +20,43 @@ if (cap.isOpened()== False):
 def get_gaze_estimate(face):
     return gaze_es.get_gaze_estimate(face=face)
 
+def detect_hand(frame):
+    return hand_de.detect_hand(frame=frame)
+
 def get_expression(gray):
     return exp_re.get_expression(gray)
 
-def check_triggers(frame):
-    trig1 = hand_de.detect_hand(frame)
-    print(trig1)
+def check_triggers(frame, face):
 
+    with concurrent.futures.ThreadPoolExecutor() as executor:
+        trig1 = executor.submit(detect_hand, frame).result()
+        trig2 = executor.submit(get_gaze_estimate, face).result()
+                
+    if trig1:
+        return 1
+    elif trig2 >= 0.85:
+        return 1
+    
 
 while(cap.isOpened()):
     _, frame = cap.read()
-    check_triggers(frame)
     
     bbox, gray = face_re.get_face_harr(frame=frame)
     if bbox:
         for b in bbox:
             frame_arr = Image.fromarray(frame)
             face = frame_arr.crop((b))
-            with concurrent.futures.ThreadPoolExecutor() as executor:
-                future_gaze = executor.submit(get_gaze_estimate, face)
-                future_expression = executor.submit(get_expression, gray[int(b[1]):int(b[3]), int(b[0]):int(b[2])])
-                gaze_result = future_gaze.result()
-                expression_result = future_expression.result()
+            if(flag_trig or first):
+                with concurrent.futures.ThreadPoolExecutor() as executor:
+                    future_expression = executor.submit(get_expression, gray[int(b[1]):int(b[3]), int(b[0]):int(b[2])])
+                    expression_result = future_expression.result()
 
-            print(gaze_result)
-            print(expression_result)
-    
+                print(expression_result)
+            else:
+                flag_trig = check_triggers(frame, face)
+
+            first = 0
+
     cv2.imshow('',frame)
     key = cv2.waitKey(1) & 0xFF
     if key == ord('q'):
