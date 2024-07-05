@@ -2,10 +2,13 @@ import cv2
 from PIL import Image
 import concurrent.futures
 
+import t_Hand_waving_Detection as hand_de
+import t_gaze as gaze_es
+
 import m_face as face_re
 import m_expression as exp_re
-import b_Hand_waving_Detection as hand_de
-import b_gaze as gaze_es
+
+import b_speech_to_text as speech_re
 
 
 cap = cv2.VideoCapture(0)
@@ -26,8 +29,11 @@ def detect_hand(frame):
 def get_expression(gray):
     return exp_re.get_expression(gray)
 
-def check_triggers(frame, face):
+def speech_to_text():
+    speech_re.speech_to_text()
 
+
+def check_triggers(frame, face):
     with concurrent.futures.ThreadPoolExecutor() as executor:
         trig1 = executor.submit(detect_hand, frame).result()
         trig2 = executor.submit(get_gaze_estimate, face).result()
@@ -37,7 +43,12 @@ def check_triggers(frame, face):
     elif trig2 >= 0.85:
         return 1
     
-
+cap.release()
+with concurrent.futures.ThreadPoolExecutor() as executor:
+    executor.submit(speech_to_text).result()
+while 1:
+    print("meow")
+'''
 while(cap.isOpened()):
     _, frame = cap.read()
     
@@ -61,7 +72,7 @@ while(cap.isOpened()):
     key = cv2.waitKey(1) & 0xFF
     if key == ord('q'):
         break
-
+'''
 cap.release()
 hand_de.close_hands()
 cv2.destroyAllWindows()
