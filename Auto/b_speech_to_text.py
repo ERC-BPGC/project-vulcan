@@ -1,4 +1,3 @@
-import os
 import speech_recognition as sr
 
 from datetime import datetime, timedelta
@@ -53,7 +52,7 @@ recorder.listen_in_background(source, record_callback, phrase_time_limit=record_
 
 a = 0
 def speech_to_text():
-    global noise_tag, last_sample
+    global noise_tag, last_sample, last_text, counter
     while True:
         try:
             now = datetime.utcnow()
@@ -70,6 +69,7 @@ def speech_to_text():
                 try:
                     result = recorder.recognize_google(audio_data)
                     text = result.strip()
+
                     if text == last_text:
                         counter += 1
                         #print(counter)
@@ -115,3 +115,6 @@ def speech_to_text():
 
         except KeyboardInterrupt:
             exit()
+
+while 1:
+    speech_to_text()
