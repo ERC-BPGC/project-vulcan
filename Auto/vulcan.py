@@ -1,7 +1,10 @@
+import multiprocessing.shared_memory
 import cv2
 from PIL import Image
 import concurrent.futures
 import subprocess
+import multiprocessing
+
 
 import t_Hand_waving_Detection as hand_de
 import t_gaze as gaze_es
@@ -13,10 +16,14 @@ cap = cv2.VideoCapture(0)
 flag_trig = 0
 first = 1
 
+bg_speech_to_text = ''
+bg_gpt = ''
+shm = multiprocessing.shared_memory.SharedMemory(create=True, size=250)
+
 
 if (cap.isOpened()== False):
     print("Error opening video stream or file")
-    exit()
+    #exit()
 
 def get_gaze_estimate(face):
     return gaze_es.get_gaze_estimate(face=face)
@@ -27,6 +34,15 @@ def detect_hand(frame):
 def get_expression(gray):
     return exp_re.get_expression(gray)
 
+def start_bg_stt(shm):
+    global bg_one
+    bg_one = subprocess.Popen(['python3', 'b_speech_to_text.py', shm])
+    return bg_one
+
+def start_bg_gpt(shm):
+    global bg_one
+    bg_two = subprocess.Popen(['python3', 'b_gpt.py', shm])
+    return bg_two
 
 def check_triggers(frame, face):
     with concurrent.futures.ThreadPoolExecutor() as executor:
@@ -39,7 +55,7 @@ def check_triggers(frame, face):
         return 1
 
 def main_loop():
-    global cap,flag_trig, first
+    global cap,flag_trig, first, bg_speech_to_text, bg_gpt,shm
 
     while(cap.isOpened()):
         _, frame = cap.read()
@@ -61,6 +77,9 @@ def main_loop():
         cv2.imshow('',frame)
         key = cv2.waitKey(1) & 0xFF
         if key == ord('q'):
+            bg_speech_to_text.terminate()
+            bg_gpt.terminate()
+            shm.unlink()
             break
 
     cap.release()
@@ -68,7 +87,10 @@ def main_loop():
     cv2.destroyAllWindows()
 
 
-
 with concurrent.futures.ThreadPoolExecutor() as executor:
-    executor.submit(subprocess.Popen(['python3','b_speech_to_text.py']))                                     #run speech to text in background
-    executor.submit(main_loop)                                                                               #run main loop
+    bg_temp1 = executor.submit(start_bg_stt, shm.name)                                                 # Start speech to text in background
+    bg_speech_to_text = bg_temp1.result()       
+    bg_temp2 = executor.submit(start_bg_gpt, shm.name)                                                 # Start GPT in background
+    bg_gpt = bg_temp2.result()       
+    
+    executor.submit(main_loop)                                                                          #run main loop

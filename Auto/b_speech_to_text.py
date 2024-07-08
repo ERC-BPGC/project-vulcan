@@ -1,8 +1,11 @@
+import multiprocessing.shared_memory
 import speech_recognition as sr
-
 from datetime import datetime, timedelta
 from queue import Queue
 import torch
+import multiprocessing
+import sys
+import struct
 
 torch.cuda.empty_cache()
 
@@ -31,31 +34,23 @@ noise_tag = False
 last_text = None
 counter = 0
 
-with open("rec_text.txt", 'w') as f:
-    f.write("")
 
 with source:
     recorder.adjust_for_ambient_noise(source)
 
 def record_callback(_, audio:sr.AudioData) -> None:
-    """
-    Threaded callback function to recieve audio data when recordings finish.
-    audio: An AudioData containing the recorded bytes.
-    """
-    # Grab the raw bytes and push it into the thread safe queue.
     data = audio.get_raw_data()
     data_queue.put(data)
 
-# Create a background thread that will pass us raw audio bytes.
-# We could do this manually but SpeechRecognizer provides a nice helper.
 recorder.listen_in_background(source, record_callback, phrase_time_limit=record_timeout)
 
-a = 0
-def speech_to_text():
+def speech_to_text(shm):
     global noise_tag, last_sample, last_text, counter
+    existing_shm = multiprocessing.shared_memory.SharedMemory(name=shm)
+        
     while True:
         try:
-            now = datetime.utcnow()
+            now = datetime.now()
             # Pull raw recorded audio from the queue.
             if not data_queue.empty() and not noise_tag:
                 phrase_complete = False
@@ -72,7 +67,6 @@ def speech_to_text():
 
                     if text == last_text:
                         counter += 1
-                        #print(counter)
                     if counter == 2:
                         noise_tag = True
 
@@ -85,19 +79,17 @@ def speech_to_text():
                 else:
                     transcription[-1] = text
 
-                #os.system('cls' if os.name=='nt' else 'clear')
-                for line in transcription:
-                    print(line)
-
-                # Flush stdout.
-                #print('', end='', flush=True)
-
+                #for line in transcription:
+                #    print(line)
+                #    sys.stdout.flush()
+                
             else:
                 if noise_tag:
                     last_sample = bytes()
                     phrase_complete = True
-                    with open("rec_text.txt", 'a') as f:
-                        f.write(text+"\n")
+                    
+                    existing_shm.buf[:4] = struct.pack('I', len(text))
+                    existing_shm.buf[4:4+len(text)] = text.encode()
 
                     noise_tag = False
                     counter = 0
@@ -107,8 +99,9 @@ def speech_to_text():
                         if (not phrase_complete) and now - phrase_time > timedelta(seconds=phrase_timeout):
                             last_sample = bytes()
                             phrase_complete = True
-                            with open("rec_text.txt", 'a') as f:
-                                f.write(text+"\n")
+                        existing_shm.buf[:4] = struct.pack('I', len(text))
+                        existing_shm.buf[4:4+len(text)] = text.encode()
+
                     except:
                         pass
 
@@ -116,5 +109,6 @@ def speech_to_text():
         except KeyboardInterrupt:
             exit()
 
-while 1:
-    speech_to_text()
+if __name__ == "__main__":
+    shm = sys.argv[1]
+    speech_to_text(shm)
