@@ -2,7 +2,6 @@ import torch.nn as nn
 import torch
 import math
 
-
 def model_static(pretrained=False, **kwargs):
     model = ResNet([3, 4, 6, 3], **kwargs)
     if pretrained:

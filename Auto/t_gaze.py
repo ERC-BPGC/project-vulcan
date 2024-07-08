@@ -1,7 +1,7 @@
 import torch
 import torch.nn.functional as F
 from torchvision import transforms
-from model import model_static
+from m_model import model_static
 
 model_weight = 'models/model_weights.pkl'
 test_transforms = transforms.Compose([transforms.Resize(224), transforms.CenterCrop(224), transforms.ToTensor(),
