@@ -23,19 +23,20 @@ def test(shm):
     existing_shm = multiprocessing.shared_memory.SharedMemory(name=shm)
     
     prompt = ""
+    last_prompt = ""
     while 1:
-        while prompt == "":
+        while prompt == last_prompt:
             data_length = struct.unpack('I', existing_shm.buf[:4])[0]
             prompt = bytes(existing_shm.buf[4:4+data_length]).decode('utf-8')
 
         print(prompt)
-        prompt = ""
+        last_prompt = prompt
         #ask_gpt(prompt)
     
         
 
 def ask_gpt(prompt: str):
-    global SYSTEM_MESSAGE, chat_history
+    global SYSTEM_MESSAGE, chat_history 
     openai.api_key = ""
 
     user_prompt = {"role": "user", "content": prompt}
