@@ -5,7 +5,6 @@ import concurrent.futures
 import subprocess
 import multiprocessing
 
-
 import t_Hand_waving_Detection as hand_de
 import t_gaze as gaze_es
 
@@ -25,6 +24,8 @@ if (cap.isOpened()== False):
     print("Error opening video stream or file")
     #exit()
 
+# Functions to call other modules
+# Visual
 def get_gaze_estimate(face):
     return gaze_es.get_gaze_estimate(face=face)
 
@@ -34,6 +35,7 @@ def detect_hand(frame):
 def get_expression(gray):
     return exp_re.get_expression(gray)
 
+#Audio
 def start_bg_stt(shm):
     global bg_one
     bg_one = subprocess.Popen(['python3', 'b_speech_to_text.py', shm])
@@ -44,6 +46,7 @@ def start_bg_gpt(shm):
     bg_two = subprocess.Popen(['python3', 'b_gpt.py', shm])
     return bg_two
 
+#Check inital triggers
 def check_triggers(frame, face):
     with concurrent.futures.ThreadPoolExecutor() as executor:
         trig1 = executor.submit(detect_hand, frame).result()                #tirgger 1: hand waving
@@ -54,7 +57,8 @@ def check_triggers(frame, face):
     elif trig2 >= 0.85:                                                     #threshold of gaze
         return 1
 
-def main_loop():
+
+def vision():
     global cap,flag_trig, first, bg_speech_to_text, bg_gpt,shm
 
     while(cap.isOpened()):
@@ -93,4 +97,4 @@ with concurrent.futures.ThreadPoolExecutor() as executor:
     bg_temp2 = executor.submit(start_bg_gpt, shm.name)                                                 # Start GPT in background
     bg_gpt = bg_temp2.result()       
     
-    executor.submit(main_loop)                                                                          #run main loop
+    executor.submit(vision)                                                                          #run main loop

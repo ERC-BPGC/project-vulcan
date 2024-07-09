@@ -28,7 +28,9 @@ def test(shm):
             data_length = struct.unpack('I', existing_shm.buf[:4])[0]
             prompt = bytes(existing_shm.buf[4:4+data_length]).decode('utf-8')
 
-        ask_gpt(prompt)
+        print(prompt)
+        prompt = ""
+        #ask_gpt(prompt)
     
         
 
