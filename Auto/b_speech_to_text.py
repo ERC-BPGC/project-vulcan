@@ -25,15 +25,16 @@ source = sr.Microphone(sample_rate=16000)
 
 record_timeout = 0.75
 phrase_timeout = 3
-
+phrase_time = datetime.now()
+    
 #temp_file = NamedTemporaryFile().name
 transcription = ['']
 
 phrase_complete = True
 noise_tag = False
-last_text = None
+last_text = ""
 counter = 0
-
+text = ""
 
 with source:
     recorder.adjust_for_ambient_noise(source)
@@ -45,67 +46,38 @@ def record_callback(_, audio:sr.AudioData) -> None:
 recorder.listen_in_background(source, record_callback, phrase_time_limit=record_timeout)
 
 def speech_to_text(shm):
-    global noise_tag, last_sample, last_text, counter
-    existing_shm = multiprocessing.shared_memory.SharedMemory(name=shm)
-        
-    while True:
-        try:
-            now = datetime.now()
-            # Pull raw recorded audio from the queue.
-            if not data_queue.empty() and not noise_tag:
-                phrase_complete = False
-                phrase_time = now       
+    global noise_tag, last_sample, last_text, counter, text,phrase_time
 
+    existing_shm = multiprocessing.shared_memory.SharedMemory(name=shm)
+    while True:
+        try:     
+            # Pull raw recorded audio from the queue.
+            if not data_queue.empty(): #and not noise_tag: 
+                phrase_time = datetime.now()
                 while not data_queue.empty():
                     data = data_queue.get()
                     last_sample += data
-
+            
                 audio_data = sr.AudioData(last_sample, source.SAMPLE_RATE, source.SAMPLE_WIDTH)
                 try:
                     result = recorder.recognize_google(audio_data)
                     text = result.strip()
-
-                    if text == last_text:
-                        counter += 1
-                    if counter == 2:
-                        noise_tag = True
-
-                    last_text = text
                 except:
                     text = ""
-
-                if phrase_complete:
-                    transcription.append(text)
-                else:
-                    transcription[-1] = text
-
-                #for line in transcription:
-                #    print(line)
-                #    sys.stdout.flush()
                 
             else:
-                if noise_tag:
+                if datetime.now() - phrase_time > timedelta(seconds=phrase_timeout):
                     last_sample = bytes()
-                    phrase_complete = True
-                    
-                    existing_shm.buf[:4] = struct.pack('I', len(text))
-                    existing_shm.buf[4:4+len(text)] = text.encode()
-
-                    noise_tag = False
-                    counter = 0
-                    
-                else:
-                    try :
-                        if (not phrase_complete) and now - phrase_time > timedelta(seconds=phrase_timeout):
-                            last_sample = bytes()
-                            phrase_complete = True
+                    if last_text == text:
+                        counter += 1
+                    else:
+                        counter = 0
+                    if counter == 1:               
+                        #print(text)
                         existing_shm.buf[:4] = struct.pack('I', len(text))
                         existing_shm.buf[4:4+len(text)] = text.encode()
-
-                    except:
-                        pass
-
-
+                    last_text = text
+                    
         except KeyboardInterrupt:
             exit()
 
