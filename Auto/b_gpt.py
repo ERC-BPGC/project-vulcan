@@ -19,8 +19,9 @@ Do not give any code snippet.
 """
 chat_history = []
 
-def test(shm):
+def test(shm,shm2):
     existing_shm = multiprocessing.shared_memory.SharedMemory(name=shm)
+    existing_shm2 = multiprocessing.shared_memory.SharedMemory(name=shm2)
     
     prompt = ""
     last_prompt = ""
@@ -29,11 +30,12 @@ def test(shm):
             data_length = struct.unpack('I', existing_shm.buf[:4])[0]
             prompt = bytes(existing_shm.buf[4:4+data_length]).decode('utf-8')
 
-        print(prompt)
+        #print(prompt)
         last_prompt = prompt
-        #ask_gpt(prompt)
-    
-        
+        to_say = ask_gpt(prompt)
+
+        existing_shm2.buf[:4] = struct.pack('I', len(to_say))
+        existing_shm2.buf[4:4+len(to_say)] = to_say.encode()
 
 def ask_gpt(prompt: str):
     global SYSTEM_MESSAGE, chat_history 
@@ -53,8 +55,10 @@ def ask_gpt(prompt: str):
     chat_history.append(user_prompt)
     chat_history.append({"role": "assistant", "content": content})
 
-    print("\033[92m" + content + "\033[0m")
+    #print("\033[92m" + content + "\033[0m")
+    return content
 
 if __name__ == "__main__":
     shm = sys.argv[1]
-    test(shm)
+    shm2 = sys.argv[2]
+    test(shm, shm2)
