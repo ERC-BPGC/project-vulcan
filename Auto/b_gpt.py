@@ -15,7 +15,7 @@ You are supposed to answer in short to most queries asked. Not more than 3-5 lin
 """
 
 chat_history = []
-openai.api_key = ""
+#openai.api_key = ""
 
 
 def test(shm,shm2):
