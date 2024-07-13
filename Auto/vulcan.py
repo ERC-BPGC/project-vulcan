@@ -4,6 +4,7 @@ from PIL import Image
 import concurrent.futures
 import subprocess
 import multiprocessing
+import time
 
 import t_Hand_waving_Detection as hand_de
 import t_gaze as gaze_es
@@ -19,6 +20,7 @@ bg_speech_to_text = ''
 bg_gpt = ''
 bg_TTS = ''
 shm = multiprocessing.shared_memory.SharedMemory(create=True, size=250)
+time.sleep(0.1)
 shm2 = multiprocessing.shared_memory.SharedMemory(create=True, size=250)
 
 
@@ -76,12 +78,11 @@ def vision():
                     with concurrent.futures.ThreadPoolExecutor() as executor:
                         future_expression = executor.submit(get_expression, gray[int(b[1]):int(b[3]), int(b[0]):int(b[2])])     #expression detection
                         expression_result = future_expression.result()
-
+                    first = 0
                     print(expression_result)
                 else:
                     flag_trig = check_triggers(frame, face)
 
-                first = 0
         cv2.imshow('',frame)
         key = cv2.waitKey(1) & 0xFF
         if key == ord('q'):

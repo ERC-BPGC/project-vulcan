@@ -3,7 +3,7 @@ import pyttsx3
 import sys
 import multiprocessing
 import struct
-
+import time
 def text_to_speech(text):
     engine = pyttsx3.init()
     engine.setProperty('rate', 150)  # Speed percent (can go over 100)
@@ -19,6 +19,7 @@ def main_loop(shm2):
         while text == last_text:
             data_length = struct.unpack('I', existing_shm.buf[:4])[0]
             text = bytes(existing_shm.buf[4:4+data_length]).decode('utf-8')
+            time.sleep(0.001)
 
         last_text = text
         text_to_speech(text)

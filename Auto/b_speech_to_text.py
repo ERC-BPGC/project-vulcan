@@ -46,13 +46,12 @@ def record_callback(_, audio:sr.AudioData) -> None:
 recorder.listen_in_background(source, record_callback, phrase_time_limit=record_timeout)
 
 def speech_to_text(shm):
-    global noise_tag, last_sample, last_text, counter, text,phrase_time
+    global last_sample, last_text, counter, text,phrase_time
 
     existing_shm = multiprocessing.shared_memory.SharedMemory(name=shm)
     while True:
         try:     
-            # Pull raw recorded audio from the queue.
-            if not data_queue.empty(): #and not noise_tag: 
+            if not data_queue.empty(): 
                 phrase_time = datetime.now()
                 while not data_queue.empty():
                     data = data_queue.get()
@@ -76,6 +75,7 @@ def speech_to_text(shm):
                         #print(text)
                         existing_shm.buf[:4] = struct.pack('I', len(text))
                         existing_shm.buf[4:4+len(text)] = text.encode()
+                        text = ""
                     last_text = text
                     
         except KeyboardInterrupt:
