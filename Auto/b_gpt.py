@@ -53,7 +53,6 @@ def ask_gpt(prompt: str):
     chat_history.append(user_prompt)
     chat_history.append({"role": "assistant", "content": content})
 
-    #print("\033[92m" + content + "\033[0m")
     return content
 
 
