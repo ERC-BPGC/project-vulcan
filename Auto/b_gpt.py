@@ -4,6 +4,8 @@ import multiprocessing
 import sys
 import struct
 import time
+import os
+
 SYSTEM_MESSAGE = """
 Provide short, concise answers to the user's questions.
 Your name is Vulcan.
@@ -15,8 +17,7 @@ You are supposed to answer in short to most queries asked. Not more than 3-5 lin
 """
 
 chat_history = []
-#openai.api_key = ""
-
+openai.api_key = os.environ["OPENAI_API_KEY"]
 
 def test(shm,shm2):
     existing_shm = multiprocessing.shared_memory.SharedMemory(name=shm)
@@ -27,7 +28,7 @@ def test(shm,shm2):
     while 1:
         while prompt == last_prompt:
             data_length = struct.unpack('I', existing_shm.buf[:4])[0]
-            prompt = bytes(existing_shm.buf[4:4+data_length]).decode('utf-8')
+            prompt = bytes(existing_shm.buf[4:4+data_length]).decode('utf-8').replace('\n','')
             time.sleep(0.001)
 
         last_prompt = prompt
