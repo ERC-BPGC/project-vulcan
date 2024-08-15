@@ -53,7 +53,7 @@ def ask_gpt(prompt: str):
     content = response.choices[0].message.content
     chat_history.append(user_prompt)
     chat_history.append({"role": "assistant", "content": content})
-
+    print(content)
     return content
 
 
