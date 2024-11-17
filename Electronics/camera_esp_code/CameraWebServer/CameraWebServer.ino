@@ -22,7 +22,7 @@
 const char *ssid = "yeh le";
 const char *password = "olala420";
 
-IPAddress local_IP(192, 168, 180, 230);  // Replace with your chosen IP
+IPAddress local_IP(192, 168, 180, 231);  // Replace with your chosen IP 230 and 231
 IPAddress gateway(192, 168, 180, 183);     // Replace with your gateway
 IPAddress subnet(255, 255, 255, 0);      // Typical subnet mask
 IPAddress primaryDNS(8, 8, 8, 8);        // Optional, set DNS
