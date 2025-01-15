@@ -165,7 +165,6 @@ sudo rm -rf ~/opencv_contrib
 
 
 pip3 uninstall dlib
-sudo python3 setup.py install --set USE_AVX_INSTRUCTIONS=1 --set DLIB_USE_CUDA=1
 
 cd
 git clone https://github.com/davisking/dlib.git
