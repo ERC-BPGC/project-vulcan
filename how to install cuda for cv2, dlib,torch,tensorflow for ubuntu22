@@ -113,7 +113,7 @@ cd build
 # Configure with CUDA and cuDNN support
 cmake .. -DOPENCV_EXTRA_MODULES_PATH=../opencv_contrib/modules \
          -DWITH_CUDA=ON \
-         -DCUDA_ARCH_BIN=8.6 \   (replace 8.6 with compute capablity of your gpu)
+         -DCUDA_ARCH_BIN=8.6 \   #(replace 8.6 with compute capablity of your gpu)
          -DCUDA_ARCH_PTX="" \
          -DCUDA_FAST_MATH=ON \
          -DCUDNN_VERSION=9.2.0 \
