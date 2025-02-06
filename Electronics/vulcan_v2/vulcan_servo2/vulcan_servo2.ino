@@ -67,11 +67,11 @@ void IRAM_ATTR onTimer1()
   {
     if(tl_counter% 800 == 0)
     {
-      Mouth_linear.write(125);
+      Mouth_Rotational.write(115);
     }
     if(tl_counter%800 == 400)
     {
-      Mouth_linear.write(95);
+      Mouth_Rotational.write(85);
     }
   }
 }
@@ -105,7 +105,7 @@ void setup() {
   R_eye_LR.write(125);
   R_lid_U.write(135);
   R_lid_D.write(117);
-  Mouth_linear.write(125);
+  Mouth_linear.write(140);
   Mouth_Rotational.write(85);
 
     // Create a hardware timer
@@ -120,25 +120,25 @@ void setup() {
 
 void check_cond()
 {
-   if (L_eye_V >= 120)
-      L_eye_V = 120;
-    if (L_eye_V <= 75)
-      L_eye_V = 75;
+   if (L_eye_V >= 115)
+      L_eye_V = 115;
+    if (L_eye_V <= 102)
+      L_eye_V = 102;
       
-    if (L_eye_H >= 105)
-      L_eye_H = 105;
-    if (L_eye_H <= 60)
-      L_eye_H = 60;
+    if (L_eye_H >= 120)
+      L_eye_H = 120;
+    if (L_eye_H <= 55)
+      L_eye_H = 55;
 
     if (R_eye_V >= 100)
       R_eye_V = 100;
     if (R_eye_V <= 55)
       R_eye_V = 55;
       
-    if (R_eye_H >= 145)
-      R_eye_H = 145;
-    if (R_eye_H <= 95)
-      R_eye_H = 95;
+    if (R_eye_H >= 155)
+      R_eye_H = 155;
+    if (R_eye_H <= 90)
+      R_eye_H = 90;
 }
 void loop() {
   unsigned long currentMillis = millis();  // Get the current time
@@ -213,17 +213,18 @@ void loop() {
     {
       if(Talk == 0)
       {
-        for (int angle = 95; angle <= 125; angle++) 
+
+        for (int angle = 85; angle <= 115; angle++) 
         {
-            Mouth_linear.write(angle);
-            Mouth_Rotational.write(angle-10);
+            Mouth_linear.write((int)(-1.433*angle+261.833));
+            Mouth_Rotational.write(angle);
             delay(30);
         }
         delay(800);
-        for (int angle = 125; angle >= 95; angle--) 
+        for (int angle = 115; angle >= 85; angle--) 
         {
-            Mouth_linear.write(angle);
-            Mouth_Rotational.write(angle-10);
+            Mouth_linear.write((int)(-1.433*angle+261.833));
+            Mouth_Rotational.write(angle);
             delay(5);
         } 
 
@@ -231,31 +232,31 @@ void loop() {
     } 
     else if (receivedValue == 11)     //Look around
     {
-      for (int angle = 130; angle <= 140; angle++)
-      {
-        R_eye_LR.write(angle);
-        L_eye_LR.write(3*angle-325);
-        delay(30);
-      }
-      for (int angle = 140; angle >= 85; angle--) 
-      {
-        R_eye_LR.write(angle);
-        L_eye_LR.write(3*angle-325);
-        delay(30);
-      }
+      // for (int angle = 125; angle <= 160; angle++)
+      // {
+      //   R_eye_LR.write(angle);
+      //   L_eye_LR.write(3*angle-325);
+      //   delay(30);
+      // }
+      // for (int angle = 160; angle >= 85; angle--) 
+      // {
+      //   R_eye_LR.write(angle);
+      //   L_eye_LR.write(3*angle-325);
+      //   delay(30);
+      // }
 
-      for (int angle = 130; angle <= 150; angle++)
-      {
-        R_eye_LR.write(angle);
-        L_eye_LR.write(3*angle-325);
-        delay(15);
-      }
-      for (int angle = 140; angle >= 85; angle--) 
-      {
-        R_eye_LR.write(angle);
-        L_eye_LR.write(3*angle-325);
-        delay(15);
-      }
+      // for (int angle = 125; angle <= 150; angle++)
+      // {
+      //   R_eye_LR.write(angle);
+      //   L_eye_LR.write(3*angle-325);
+      //   delay(15);
+      // }
+      // for (int angle = 140; angle >= 85; angle--) 
+      // {
+      //   R_eye_LR.write(angle);
+      //   L_eye_LR.write(3*angle-325);
+      //   delay(15);
+      // }
       
     } 
     else if (receivedValue == 12) 
@@ -300,7 +301,7 @@ void loop() {
     
     if(Talk == 0)
     {
-      Mouth_linear.write(125);
+      Mouth_linear.write(140);
       Mouth_Rotational.write(85);
     }
 

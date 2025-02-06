@@ -131,7 +131,7 @@ void R_ball_UD_cycle()
 }
 void R_ball_LR_cycle()
 {
-  for (int angle = 125; angle <= 150; angle++) //85 - 125 - 150
+  for (int angle = 125; angle <= 160; angle++) //85 - 125 - 160
   {
     R_eye_LR.write(angle);
     delay(15);
@@ -178,25 +178,26 @@ void R_LID_D_cycle()
 
 void mouth_linear_cycle()
 {
-  for (int angle = 95; angle <= 125; angle++) 
+  for (int angle = 140; angle >= 97; angle--) 
   {
     Mouth_linear.write(angle);
     delay(15);
   }
-  for (int angle = 125; angle >= 95; angle--) 
+  for (int angle = 97; angle <= 140; angle++) 
   {
     Mouth_linear.write(angle);
-    delay(15);
+    delay(1);
   }
+  
 }
 void mouth_rot_cycle()
 {
-  for (int angle = 80; angle <= 115; angle++) 
+  for (int angle = 85; angle <= 115; angle++) 
   {
     Mouth_Rotational.write(angle);
     delay(15);
   }
-  for (int angle = 115; angle >= 80; angle--) 
+  for (int angle = 115; angle >= 85; angle--) 
   {
     Mouth_Rotational.write(angle);
     delay(15);
@@ -206,18 +207,18 @@ void mouth_rot_cycle()
 
 void loop() {
 
-//  L_LID_D_cycle();      //  85-100
+  // L_LID_D_cycle();      //  85-100
 //  L_LID_U_cycle();      //  0-70
 //  L_ball_LR_cycle();    //  50-125
 //  L_ball_UD_cycle();    //  97-120
-//  R_ball_UD_cycle();    //  80-105
-//  R_ball_LR_cycle();    //  125-150
+ R_ball_UD_cycle();    //  80-105
+ R_ball_LR_cycle();    //  85-160
 //  R_LID_U_cycle();      //  40-135
 //  R_LID_D_cycle();      //  103-117
-//  mouth_rot_cycle();    //  80-115
-//  mouth_linear_cycle(); //  95-125
+  //  mouth_rot_cycle();    //  85-115
+  //mouth_linear_cycle(); //  97-140
   
-  L_lid_D.write(85);
+  L_lid_D.write(80);
   L_lid_U.write(0);
   L_eye_LR.write(87);
   L_eye_UD.write(97);
@@ -225,6 +226,6 @@ void loop() {
   R_eye_LR.write(125);
   R_lid_U.write(135); 
   R_lid_D.write(117);
-  Mouth_linear.write(125);
-  Mouth_Rotational.write(80);
+  Mouth_linear.write(140);
+  Mouth_Rotational.write(85);
 }
