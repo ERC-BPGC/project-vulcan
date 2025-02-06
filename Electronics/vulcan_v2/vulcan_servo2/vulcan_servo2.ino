@@ -213,9 +213,11 @@ void loop() {
     {
       if(Talk == 0)
       {
-
+         blinking = 0;
         for (int angle = 85; angle <= 115; angle++) 
         {
+            R_lid_U.write((int)(-3.167*angle+404.167));
+           L_lid_U.write((int)(2.333*angle-198.333));
             Mouth_linear.write((int)(-1.433*angle+261.833));
             Mouth_Rotational.write(angle);
             delay(30);
@@ -226,7 +228,10 @@ void loop() {
             Mouth_linear.write((int)(-1.433*angle+261.833));
             Mouth_Rotational.write(angle);
             delay(5);
-        } 
+        }  
+        L_lid_U.write(0);
+        R_lid_U.write(135);
+        blinking = 1;
 
       }
     } 
