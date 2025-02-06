@@ -67,7 +67,7 @@ void IRAM_ATTR onTimer1()
   {
     if(tl_counter% 800 == 0)
     {
-      Mouth_Rotational.write(115);
+      Mouth_Rotational.write(95);
     }
     if(tl_counter%800 == 400)
     {
