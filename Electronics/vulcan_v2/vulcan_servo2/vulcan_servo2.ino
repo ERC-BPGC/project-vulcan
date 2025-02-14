@@ -122,23 +122,23 @@ void check_cond()
 {
    if (L_eye_V >= 115)
       L_eye_V = 115;
-    if (L_eye_V <= 102)
-      L_eye_V = 102;
+    if (L_eye_V <= 85)
+      L_eye_V = 85;
       
-    if (L_eye_H >= 120)
-      L_eye_H = 120;
-    if (L_eye_H <= 55)
-      L_eye_H = 55;
+    if (L_eye_H >= 115)
+      L_eye_H = 115;
+    if (L_eye_H <= 60)
+      L_eye_H = 60;
 
     if (R_eye_V >= 100)
       R_eye_V = 100;
-    if (R_eye_V <= 55)
-      R_eye_V = 55;
+    if (R_eye_V <= 65)
+      R_eye_V = 65;
       
-    if (R_eye_H >= 155)
-      R_eye_H = 155;
-    if (R_eye_H <= 90)
-      R_eye_H = 90;
+    if (R_eye_H >= 150)
+      R_eye_H = 150; 
+    if (R_eye_H <= 95)
+      R_eye_H = 95;
 }
 void loop() {
   unsigned long currentMillis = millis();  // Get the current time
