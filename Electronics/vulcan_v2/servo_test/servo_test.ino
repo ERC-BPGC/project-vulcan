@@ -209,9 +209,9 @@ void loop() {
 
   // L_LID_D_cycle();      //  85-100
 //  L_LID_U_cycle();      //  0-70
-//  L_ball_LR_cycle();    //  50-125
-//  L_ball_UD_cycle();    //  97-120
- R_ball_UD_cycle();    //  80-105
+  // L_ball_LR_cycle();    //  50-125
+//  L_ball_UD_cycle();    //  75-120
+//  R_ball_UD_cycle();    //  60-105
  R_ball_LR_cycle();    //  85-160
 //  R_LID_U_cycle();      //  40-135
 //  R_LID_D_cycle();      //  103-117
