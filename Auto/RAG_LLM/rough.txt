@@ -1,0 +1,18 @@
+# vulcan_token = "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"
+# API_URL = "https://api-inference.huggingface.co/models/meta-llama/Llama-3.2-1B"
+# headers = {"Authorization": "Bearer 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"}
+
+# def query(payload):
+# 	response = requests.post(API_URL, headers=headers, json=payload)
+# 	return response.json()
+	
+# output = query({
+# 	"inputs": "Can you please let us know more details about your ",
+# })
+
+# client = InferenceClient(
+#     "meta-llama/Llama-3.2-8B",
+#     token=vulcan_token,
+# )
+
+# client.text_classification("")

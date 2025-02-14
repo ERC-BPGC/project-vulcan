@@ -16,12 +16,11 @@ models = [
 ]
 
 
-def check_folder(picture):
+def check_folder(pic):
     count_files = 0
     count_success = 0
     count_number_people = 0
     success_count = 0
-    pic = cv2.imread(picture)
 
     for person2 in os.listdir('Database'):
         # print(person2.split("-"))

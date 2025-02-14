@@ -20,8 +20,13 @@ recorder = sr.Recognizer()
 # recorder.energy_threshold = 200
 # Definitely do this, dynamic energy compensation lowers the energy threshold dramtically to a point where the SpeechRecognizer never stops recording.
 recorder.dynamic_energy_threshold = True
+print("Available audio input devices:")
+microphone_list = sr.Microphone.list_microphone_names()
+# for i, mic_name in enumerate(microphone_list):
+#     print(f"{i}: {mic_name}")
 
-source = sr.Microphone(sample_rate=16000)
+
+source = sr.Microphone(device_index = 36,sample_rate=16000)
 
 record_timeout = 0.75
 phrase_timeout = 3

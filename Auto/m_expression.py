@@ -15,7 +15,7 @@ def get_expression(roi_gray):
     roi_gray = np.expand_dims(roi_gray, axis=0)
     roi_gray = np.expand_dims(roi_gray, axis=-1)
 
-    prediction = model.predict(roi_gray)
+    prediction = model.predict(roi_gray,verbose=0)
     max_index = np.argmax(prediction)
     emotion_label = emotion_labels[max_index]
     return emotion_label
