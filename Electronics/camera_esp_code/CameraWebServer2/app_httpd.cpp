@@ -43,8 +43,6 @@
 #if CONFIG_ESP_FACE_DETECT_ENABLED
 
 #include <vector>
-#include "human_face_detect_msr01.hpp"
-#include "human_face_detect_mnp01.hpp"
 
 #define TWO_STAGE 1 /*<! 1: detect by two-stage which is more accurate but slower(with keypoints). */
                     /*<! 0: detect by one-stage which is less accurate but faster(without keypoints). */
@@ -1144,12 +1142,14 @@ void startCameraServer() {
   config.max_uri_handlers = 16;
   sensor_t *s = esp_camera_sensor_get();
   s->set_xclk(s, LEDC_TIMER_0, 15);
-  //   s->set_gain_ctrl(s, 0);
-  //    s->set_exposure_ctrl(s, 1);
-  //    s->set_bpc(s, 0);
-  //    s->set_wpc(s, 0);
-  //    s->set_lenc(s, 0);
-     s->set_brightness(s, 3);
+  // s->set_framesize(s,FRAMESIZE_VGA);
+  s->set_brightness(s, 3);
+  // s->set_gainceiling(s,GAINCEILING_128X);
+  // s->set_special_effect(s,2);
+  // s->set_bpc(s, 0);
+  // s->set_wpc(s, 0);
+  // s->set_lenc(s, 0);
+
 
 
   httpd_uri_t index_uri = {
