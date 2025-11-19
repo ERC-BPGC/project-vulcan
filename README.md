@@ -80,8 +80,10 @@ Well... this is probably the 1% out of the 100 that we can do with... can start 
 * [ROS](https://www.ros.org/) - Environment used
 * [OPENCV](https://opencv.org/) - Used for vision
 
-## Put this in terminal to install all dependencies of auto folder
-pip install opencv-python numpy Pillow torch torchvision dlib deepface keras tensorflow speechrecognition pyttsx3 langchain langchain-ollama langchain-community openai pyserial
+## Downloading all the dependencies for running auto folder
+- Make sure cmake and cuda are already downloaded before doing this
+- Download the reurequirements.txt file
+- pip install -r requirements.txt
 
 ## Project Leads
 
