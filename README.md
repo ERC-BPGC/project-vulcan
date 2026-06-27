@@ -179,6 +179,6 @@ python software/core/vulcan2.py
 * Indrajit Mandal
 * [Anirudh Singh Air](https://github.com/bodsvei)
 * [Ayush R. Srivastava]
-* [Aditya Kushwaha]
-* [Vedant Vakharia]
+* [Aditya Kushwaha](https://github.com/Adityakushwaha2006)
+* [Vedant Vakharia](https://github.com/vedantvakharia)
 * [Rajas Kasar]
