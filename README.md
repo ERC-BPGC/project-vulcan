@@ -162,13 +162,14 @@ python software/core/vulcan2.py
 * [KiCad](https://www.kicad.org/)
 * [ROS](https://www.ros.org/)
 
-
+## Downloading all the dependencies for running auto folder
+- Make sure cmake and cuda are already downloaded before doing this
+- Download the reurequirements.txt file
+- pip install -r requirements.txt
 
 ## Limitations
 
 * The robot covers only the structure above the neck — no full-body mobility.
-
-
 
 ## Core Contributors
 
