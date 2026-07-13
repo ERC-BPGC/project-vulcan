@@ -1,0 +1,24 @@
+# Project VULCAN — Python dependencies
+# Install with: pip install -r requirements.txt
+# Ensure you have CUDA set up first — see docs/install_cuda_ubuntu.md
+
+# Vision / CV
+opencv-python
+dlib
+keras
+tensorflow
+
+# Speech
+openai-whisper
+pyttsx3
+pyaudio
+speechrecognition
+
+# LLM / RAG
+openai
+langchain
+chromadb
+
+# Utilities
+numpy
+pandas

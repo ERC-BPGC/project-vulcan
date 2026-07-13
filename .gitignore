@@ -1,0 +1,50 @@
+# Python
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+.Python
+*.egg-info/
+dist/
+build/
+.eggs/
+*.egg
+venv/
+env/
+.env
+.venv
+
+# Jupyter
+.ipynb_checkpoints/
+
+# Large binary model files (download separately — see software/models/README.md)
+*.pkl
+*.dat
+*.dat.bz2
+*.hdf5
+*.h5
+*.weights
+*.onnx
+*.pt
+*.pth
+
+# KiCad auto-generated / lock files
+fp-info-cache
+*-backups/
+*.lck
+#auto_saved_files#
+
+# macOS
+.DS_Store
+.AppleDouble
+.LSOverride
+Thumbs.db
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Logs
+*.log

@@ -1,0 +1,90 @@
+{
+  "Header": {
+    "GenerationSoftware": {
+      "Vendor": "KiCad",
+      "Application": "Pcbnew",
+      "Version": "8.0.4-8.0.4-0~ubuntu22.04.1"
+    },
+    "CreationDate": "2024-09-21T05:33:05+05:30"
+  },
+  "GeneralSpecs": {
+    "ProjectId": {
+      "Name": "Servo_pcb_esp32",
+      "GUID": "53657276-6f5f-4706-9362-5f6573703332",
+      "Revision": "rev?"
+    },
+    "Size": {
+      "X": 49.55,
+      "Y": 70.55
+    },
+    "LayerNumber": 2,
+    "BoardThickness": 1.6,
+    "Finish": "None"
+  },
+  "DesignRules": [
+    {
+      "Layers": "Outer",
+      "PadToPad": 0.2,
+      "PadToTrack": 0.2,
+      "TrackToTrack": 0.2,
+      "MinLineWidth": 0.2
+    }
+  ],
+  "FilesAttributes": [
+    {
+      "Path": "Servo_pcb_esp32-B_Cu.gbr",
+      "FileFunction": "Copper,L2,Bot",
+      "FilePolarity": "Positive"
+    },
+    {
+      "Path": "Servo_pcb_esp32-B_Silkscreen.gbr",
+      "FileFunction": "Legend,Bot",
+      "FilePolarity": "Positive"
+    },
+    {
+      "Path": "Servo_pcb_esp32-Edge_Cuts.gbr",
+      "FileFunction": "Profile",
+      "FilePolarity": "Positive"
+    }
+  ],
+  "MaterialStackup": [
+    {
+      "Type": "Legend",
+      "Name": "Top Silk Screen"
+    },
+    {
+      "Type": "SolderPaste",
+      "Name": "Top Solder Paste"
+    },
+    {
+      "Type": "SolderMask",
+      "Name": "Top Solder Mask"
+    },
+    {
+      "Type": "Copper",
+      "Name": "F.Cu"
+    },
+    {
+      "Type": "Dielectric",
+      "Material": "FR4",
+      "Name": "F.Cu/B.Cu",
+      "Notes": "Type: dielectric layer 1 (from F.Cu to B.Cu)"
+    },
+    {
+      "Type": "Copper",
+      "Name": "B.Cu"
+    },
+    {
+      "Type": "SolderMask",
+      "Name": "Bottom Solder Mask"
+    },
+    {
+      "Type": "SolderPaste",
+      "Name": "Bottom Solder Paste"
+    },
+    {
+      "Type": "Legend",
+      "Name": "Bottom Silk Screen"
+    }
+  ]
+}

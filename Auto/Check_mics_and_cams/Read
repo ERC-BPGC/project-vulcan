@@ -1,1 +1,0 @@
-When you connect an external mic, change line 26 to the index of the mic. If using PC mic, remove device_index, it takes default. To check available mics, use given code.
