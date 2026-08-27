@@ -1,22 +1,26 @@
 import cv2
 import numpy as np
 from tensorflow.keras.models import load_model
+from pathlib import Path
 
+PROJECT_ROOT = Path(__file__).resolve().parents[2]
+model_path = PROJECT_ROOT / "software" / "models" / "fer_model.hdf5"
 
-model_path = "models/fer_model.hdf5"
 emotion_labels = ['Angry', 'Disgust', 'Fear', 'Happy', 'Sad', 'Surprise', 'Neutral']
-model = load_model(model_path, compile=False)
+
+model = load_model(str(model_path), compile=False)
+
 
 def get_expression(roi_gray):
     roi_gray = cv2.resize(roi_gray, (64, 64))
-    roi_gray = roi_gray.astype('float')  
+    roi_gray = roi_gray.astype('float')
     roi_gray /= 255.0
 
     roi_gray = np.expand_dims(roi_gray, axis=0)
     roi_gray = np.expand_dims(roi_gray, axis=-1)
 
-    prediction = model.predict(roi_gray,verbose=0)
+    prediction = model.predict(roi_gray, verbose=0)
     max_index = np.argmax(prediction)
     emotion_label = emotion_labels[max_index]
-    return emotion_label
 
+    return emotion_label

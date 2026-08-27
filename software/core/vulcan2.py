@@ -1,3 +1,11 @@
+import sys
+from pathlib import Path
+
+PROJECT_ROOT = Path(__file__).resolve().parents[2]
+
+sys.path.insert(0, str(PROJECT_ROOT / "software" / "vision"))
+sys.path.insert(0, str(PROJECT_ROOT / "software" / "utils"))
+sys.path.insert(0, str(PROJECT_ROOT / "software" / "llm" / "rag"))
 import multiprocessing.shared_memory
 import cv2
 from PIL import Image
@@ -13,23 +21,23 @@ import pyttsx3
 import openai
 from threading import Event
 import Check_folder as check
-from RAG_LLM.app_lang2 import response_rag
+from app_lang2 import response_rag
 import serial  # For Arduino communication
 import random
 import threading
 import time
 
 # Arduino serial port setup (update the port and baud rate as per your setup)
-arduino = serial.Serial(port='COM8', baudrate=115200, timeout=1)
+#arduino = serial.Serial(port='COM8', baudrate=115200, timeout=1)
 
 
 # Set OpenAI API key
 # openai.api_key = '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'
 # Replace with the URL of your IP camera's stream
-ip_camera_url = "http://192.168.154.230:81/stream"
+#ip_camera_url = "http://192.168.154.230:81/stream"
 
 # Initialize VideoCapture with IP camera URL
-cap = cv2.VideoCapture(ip_camera_url)
+cap = cv2.VideoCapture(0)
 
 
 # cap = cv2.VideoCapture(0)
@@ -85,9 +93,9 @@ def text_to_speech(text):
 def conversation_code():
     global conversation_started, glob_expression
     recognizer = sr.Recognizer()
-    
+
     while not terminate_event.is_set():
-        with sr.Microphone(device_index=18) as source:
+        with sr.Microphone(device_index=0) as source:
             print("Please speak:")
             recognizer.adjust_for_ambient_noise(source)
             audio = recognizer.listen(source)
@@ -109,7 +117,7 @@ def conversation_code():
                 text_to_speech("Goodbye! See You Soon!!")
                 send_command_to_arduino(9) #mouth cycle stop
                 conversation_started=False
-                
+
             if "shut down" in text.lower():
                 send_command_to_arduino(8) #mouth cycle start
                 text_to_speech("Abort sequence initiated. Shutting down!!")
@@ -117,8 +125,8 @@ def conversation_code():
                 cap.release()
                 cv2.destroyAllWindows()
                 shm.unlink()
-                break    
-                
+                break
+
 
             if conversation_started:
                 try:
@@ -140,9 +148,9 @@ def conversation_code():
                 #     print(f"OpenAI API error: {e}")
                 # except Exception as e:
                 #     print(f"Unexpected error: {e}")
-                    
+
                     response = response_rag(question=text, user_expression=glob_expression)
-                    send_command_to_arduino(8) #mouth cycle stop 
+                    send_command_to_arduino(8) #mouth cycle stop
                     text_to_speech(response)
                     send_command_to_arduino(9)
                     # output_text = response.choices[0].message['content'].strip()
@@ -150,24 +158,24 @@ def conversation_code():
                 #   print(f"API error: {e}")
                 except Exception as e:
                      print(f"Unexpected error: {e}")
-                     
+
             else:
                 send_command_to_arduino(8) #mouth cycle start
-                text_to_speech("Greet me with HELLO VULCAN to start chatting!!")   
-                send_command_to_arduino(9) #mouth cycle stop      
-            
-                         
-             
-   
+                text_to_speech("Greet me with HELLO VULCAN to start chatting!!")
+                send_command_to_arduino(9) #mouth cycle stop
+
+
+
+
         except sr.UnknownValueError:
             send_command_to_arduino(8) #mouth cycle start
             text_to_speech("Sorry, I could not understand what you said.")
             send_command_to_arduino(9) #mouth cycle stop
-         
+
         except sr.RequestError as e:
             send_command_to_arduino(8) #mouth cycle start
             text_to_speech(f"Could not request results from the speech recognition service: {e}")
-            send_command_to_arduino(9) #mouth cycle stop 
+            send_command_to_arduino(9) #mouth cycle stop
 
 # Vision function for facial expression detection
 # def vision():
@@ -216,8 +224,8 @@ def conversation_code():
 
 #     cap.release()
 #     cv2.destroyAllWindows()
-    
-    
+
+
   # Replace 'COM3' with your Arduino's port
 
 # import serial  # For Arduino communication
@@ -237,9 +245,9 @@ def send_command_to_arduino(command):
         print(f"Command sent to Arduino: {command}")
     except Exception as e:
         print(f"Failed to send command to Arduino: {e}")
-        
-   
-    # Schedule the next command to be sent after 10 seconds   
+
+
+    # Schedule the next command to be sent after 10 seconds
 
 def vision():
     global cap, conversation_started, glob_expression
@@ -264,15 +272,15 @@ def vision():
         _, frame = cap.read()
         frame = cv2.rotate(frame, cv2.ROTATE_90_COUNTERCLOCKWISE)
         bbox, gray = face_de.get_face_harr(frame=frame)
-        
+
         current_time = time.time()
         current_time1 = time.time()
-        
+
         # Check if 10 seconds have passed to send command 10
         if current_time - last_command_time >= 50:
             send_command_to_arduino(6)
             print("sent 6")# Send command 10
-            last_command_time = current_time 
+            last_command_time = current_time
         if current_time1 - last_command_time1 >= 30:
             send_command_to_arduino(5)
             print("sent 5")# Send command 10
@@ -327,7 +335,7 @@ def vision():
     cv2.destroyAllWindows()
     #arduino.close()
 
-    
+
 
 # Main execution
 if __name__ == "__main__":

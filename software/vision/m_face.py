@@ -3,10 +3,16 @@ import cv2
 from PIL import Image
 import numpy as np
 
-har_cascade = cv2.CascadeClassifier('models/haarcascade_frontalface_default.xml')
+from pathlib import Path
 
+PROJECT_ROOT = Path(__file__).resolve().parents[2]
+MODEL_DIR = PROJECT_ROOT / "software" / "models"
 
-CNN_FACE_MODEL = 'models/mmod_human_face_detector.dat' # from http://dlib.net/files/mmod_human_face_detector.dat.bz2
+har_cascade = cv2.CascadeClassifier(
+    str(MODEL_DIR / "haarcascade_frontalface_default.xml")
+)
+
+CNN_FACE_MODEL = str(MODEL_DIR / "mmod_human_face_detector.dat")
 cnn_face_detector = dlib.cnn_face_detection_model_v1(CNN_FACE_MODEL)
 
 
