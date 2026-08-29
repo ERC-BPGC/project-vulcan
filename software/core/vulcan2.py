@@ -78,16 +78,13 @@ def get_expression(gray):
 
 # Text-to-speech function using Microsoft Zira (female voice)
 # Text-to-speech function using Microsoft Ravi (male voice)
-def text_to_speech(text):
-    engine = pyttsx3.init()
-    # Set the voice to Microsoft Ravi
-    for voice in engine.getProperty('voices'):
-        if voice.id == "HKEY_LOCAL_MACHINE\\SOFTWARE\\Microsoft\\Speech\\Voices\\Tokens\\TTS_MS_EN-US_RAVI_11.0":
-            engine.setProperty('voice', voice.id)
-            break
-    engine.say(text)
-    engine.runAndWait()
+import pyttsx3
 
+tts_engine = pyttsx3.init()
+
+def text_to_speech(text):
+    tts_engine.say(str(text))
+    tts_engine.runAndWait()
 
 # Speech-to-text and GPT conversation function
 def conversation_code():
