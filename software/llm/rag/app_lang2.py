@@ -1,3 +1,4 @@
+from pathlib import Path
 from langchain.text_splitter import RecursiveCharacterTextSplitter
 from langchain_ollama import OllamaLLM
 from langchain_ollama import OllamaEmbeddings
@@ -27,11 +28,19 @@ def text_to_speech(text):
     engine.runAndWait()
 
 def response_rag(question, user_expression):
-    file_paths = ["RAG_LLM/output-onlinetools.txt","RAG_LLM/Contact-Information2.txt","RAG_LLM/introToERC.txt"]
+    from pathlib import Path
+
+    PROJECT_ROOT = Path(__file__).resolve().parents[3]
+
+    file_paths = [
+        PROJECT_ROOT / "software" / "data" / "output-onlinetools.txt",
+        PROJECT_ROOT / "software" / "data" / "Contact-Information2.txt",
+        PROJECT_ROOT / "software" / "data" / "introToERC.txt"
+    ]
     docs_list = []
     for file_path in file_paths:
         with open(file_path, 'r', encoding='utf-8') as file:
-          docs_list.append(file.read())
+            docs_list.append(file.read())
 
     conc_docs = "\n".join(docs_list)
 
