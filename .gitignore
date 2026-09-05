@@ -49,3 +49,9 @@ Thumbs.db
 
 # Logs
 *.log
+
+# Project Vulcan model files
+!software/models/fer_model.hdf5
+!software/models/mmod_human_face_detector.dat
+!software/models/mmod_human_face_detector.dat.bz2
+!software/models/model_weights.pkl
