@@ -19,6 +19,7 @@ env/
 
 # Large binary model files (download separately — see software/models/README.md)
 *.pkl
+!software/models/model_weights.pkl
 *.dat
 *.dat.bz2
 *.hdf5
