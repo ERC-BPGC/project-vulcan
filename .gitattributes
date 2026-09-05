@@ -1,1 +1,4 @@
 software/models/model_weights.pkl filter=lfs diff=lfs merge=lfs -text
+software/models/fer_model.hdf5 filter=lfs diff=lfs merge=lfs -text
+software/models/mmod_human_face_detector.dat filter=lfs diff=lfs merge=lfs -text
+software/models/mmod_human_face_detector.dat.bz2 filter=lfs diff=lfs merge=lfs -text
