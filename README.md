@@ -175,6 +175,7 @@ python software/core/vulcan2.py
 
 * [Parth Shah](https://github.com/Parth-Shah-Tool-Kit)
 * [Ritwik Sharma](https://github.com/Maker-Rat)
+* [Sharvil Potdar] (https://github.com/CipherWielder1104)
 * [Aryan Goyal]
 * [Kevin B. Matthew]
 * Indrajit Mandal
